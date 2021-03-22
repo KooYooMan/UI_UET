@@ -27,6 +27,7 @@ class _MyanonprofileState extends State<Myanonprofile> {
     return StreamBuilder<UserData>(
         stream: DatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
+          return Loading();
           UserData userData = snapshot.data;
           if (userData != null) {
             return Scaffold(
@@ -154,11 +155,12 @@ class _MyanonprofileState extends State<Myanonprofile> {
                                   : userData.anonBio,
                               //' hiiiiiiGreyscale, also known as, is a dreaded and usually fatal dis',
                               //"Greyscale, also known as, is a dreaded and usually fatal disease that can leave flesh stiff and dead, and the skin cracked and flaking, and stone-like to the touch. Those that manage to survive a bout with the illness will be immune from ever contracting it again, but the flesh damaged by the ravages of the disease will never heal, and they will be scarred for life. Princess Shireen Baratheon caught greyscale as an infant and survived, but the ordeal left half of her face disfigured by the disease.[2]",
-                              style: userData.anonBio == ''? kCaptionTextStyle.copyWith(
-                                fontSize: 10, color: Colors.grey
-                              ):kCaptionTextStyle.copyWith(
-                                fontSize: 15,
-                              )),
+                              style: userData.anonBio == ''
+                                  ? kCaptionTextStyle.copyWith(
+                                      fontSize: 10, color: Colors.grey)
+                                  : kCaptionTextStyle.copyWith(
+                                      fontSize: 15,
+                                    )),
                           SizedBox(
                             height: 15,
                           ),
@@ -167,7 +169,7 @@ class _MyanonprofileState extends State<Myanonprofile> {
                                   fontSize: 18,
                                   fontWeight: FontWeight.w300,
                                   color: Color(0xFFFFC107))),
-                                  SizedBox(
+                          SizedBox(
                             height: 5,
                           ),
                           Text(
@@ -176,12 +178,13 @@ class _MyanonprofileState extends State<Myanonprofile> {
                                   : userData.anonBio,
                               //' hiiiiiiGreyscale, also known as, is a dreaded and usually fatal dis',
                               //"Greyscale, also known as, is a dreaded and usually fatal disease that can leave flesh stiff and dead, and the skin cracked and flaking, and stone-like to the touch. Those that manage to survive a bout with the illness will be immune from ever contracting it again, but the flesh damaged by the ravages of the disease will never heal, and they will be scarred for life. Princess Shireen Baratheon caught greyscale as an infant and survived, but the ordeal left half of her face disfigured by the disease.[2]",
-                              style: userData.anonBio == ''? kCaptionTextStyle.copyWith(
-                                fontSize: 10, color: Colors.grey
-                              ):kCaptionTextStyle.copyWith(
-                                fontSize: 15,
-                              )),
-                              
+                              style: userData.anonBio == ''
+                                  ? kCaptionTextStyle.copyWith(
+                                      fontSize: 10, color: Colors.grey)
+                                  : kCaptionTextStyle.copyWith(
+                                      fontSize: 15,
+                                    )),
+
                           SizedBox(
                             height: 15,
                           ),
@@ -190,7 +193,7 @@ class _MyanonprofileState extends State<Myanonprofile> {
                           //         fontSize: 18,
                           //         fontWeight: FontWeight.w300,
                           //         color: Color(0xFFFFC107))),
-                                  SizedBox(
+                          SizedBox(
                             height: 5,
                           ),
                         ]))

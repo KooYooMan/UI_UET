@@ -16,53 +16,91 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
-    final currentUser = Provider.of<User>(context);
-    DatabaseService databaseService = new DatabaseService(uid: currentUser.uid);
+    // final currentUser = Provider.of<User>(context);
+    // DatabaseService databaseService = new DatabaseService(uid: currentUser.uid);
 
-    retrieveNotifications(String email) async {
-      QuerySnapshot querySnapshot = await databaseService.feedReference
-          .document(email)
-          .collection('feed')
-          .orderBy('timestamp', descending: true)
-          .limit(60)
-          .getDocuments();
+    // retrieveNotifications(String email) async {
+    //   QuerySnapshot querySnapshot = await databaseService.feedReference
+    //       .document(email)
+    //       .collection('feed')
+    //       .orderBy('timestamp', descending: true)
+    //       .limit(60)
+    //       .getDocuments();
 
-      List<NotificationsItem> notificationsItems = [];
+    //   List<NotificationsItem> notificationsItems = [];
 
-      querySnapshot.documents.forEach((document) {
-        notificationsItems.add(NotificationsItem.fromDocument(document));
-      });
-      return notificationsItems;
+    //   querySnapshot.documents.forEach((document) {
+    //     notificationsItems.add(NotificationsItem.fromDocument(document));
+    //   });
+    //   return notificationsItems;
+    // }
+
+    // return StreamBuilder<UserData>(
+    //     stream: databaseService.userData,
+    //     builder: (context, snapshot) {
+    // return Loading();
+    // UserData userData = snapshot.data;
+    var data = {
+      "email": "manhcaoduy1912@gmail.com",
+      "name": "Manh Cao",
+      "nickname": "",
+      "gender": "",
+      "block": "",
+      "bio": "",
+      "dp": "",
+      "isAnonymous": false,
+      "anonBio": "",
+      "anonInterest": "",
+      "anonDp": "",
+      "fame": 10
+    };
+    UserData userData = UserData.fromMap(data);
+
+    var document = {
+      "type": "",
+      "ownerID": "",
+      "ownerName": "",
+      "Timestamp": Timestamp(100, 100),
+      "UserDp": "",
+      "UserID": "",
+      "msgInfo": "",
+      "status": "",
+      "senderEmail": "",
+      "notifID": ""
+    };
+
+    List<NotificationsItem> notificationsItems = [
+      NotificationsItem.fromMap(document),
+      NotificationsItem.fromMap(document),
+      NotificationsItem.fromMap(document),
+    ];
+
+    if (userData != null) {
+      return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0,
+          title: Text("N O T I F I C A T I O N S",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w100)),
+        ),
+        body: Container(
+          child: ListView(
+            children: notificationsItems,
+          ),
+          // child: FutureBuilder(
+          //     future: retrieveNotifications(userData.email),
+          //     builder: (context, dataSnapshot) {
+          //       if (!dataSnapshot.hasData) {
+          //         return Loading();
+          //       }
+          //       return ListView(children: dataSnapshot.data);
+          //     }),
+        ),
+      );
+    } else {
+      return Loading();
     }
-
-    return StreamBuilder<UserData>(
-        stream: databaseService.userData,
-        builder: (context, snapshot) {
-          UserData userData = snapshot.data;
-          if (userData != null) {
-            return Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                elevation: 0,
-                title: Text("N O T I F I C A T I O N S",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.w100)),
-              ),
-              body: Container(
-                child: FutureBuilder(
-                    future: retrieveNotifications(userData.email),
-                    builder: (context, dataSnapshot) {
-                      if (!dataSnapshot.hasData) {
-                        return Loading();
-                      }
-                      return ListView(children: dataSnapshot.data);
-                    }),
-              ),
-            );
-          } else {
-            return Loading();
-          }
-        });
+    // });
   }
 }
 
@@ -94,6 +132,20 @@ class NotificationsItem extends StatefulWidget {
       this.notifID});
 
   DatabaseService databaseService = new DatabaseService();
+
+  factory NotificationsItem.fromMap(Map<String, dynamic> data) {
+    return NotificationsItem(
+        type: data['type'],
+        ownerID: data['ownerID'],
+        ownerName: data['ownerName'],
+        timestamp: data['timestamp'],
+        userDp: data['userDp'],
+        userID: data['userID'],
+        msgInfo: data['msgInfo'],
+        status: data['status'],
+        senderEmail: data['senderEmail'],
+        notifID: data['notifID']);
+  }
 
   factory NotificationsItem.fromDocument(DocumentSnapshot documentSnapshot) {
     return NotificationsItem(
@@ -309,14 +361,15 @@ class _NotificationsItemState extends State<NotificationsItem> {
               child: new SizedBox(
                 width: 56,
                 height: 56,
-                child: widget.userDp != ""
-                    ? Image.network(
-                        widget.userDp,
-                        fit: BoxFit.cover,
-                      )
-                    : Image.asset('assets/images/profile1.png',
-                        fit: BoxFit.cover),
-
+                // child: widget.userDp != ""
+                //     ? Image.network(
+                //         widget.userDp,
+                //         fit: BoxFit.cover,
+                //       )
+                //     : Image.asset('assets/images/profile1.png',
+                //         fit: BoxFit.cover),
+                child: Image.asset('assets/images/profile1.png',
+                    fit: BoxFit.cover),
                 // Image.network(
                 //       widget.userDp,
                 //       fit: BoxFit.fill,
@@ -325,7 +378,8 @@ class _NotificationsItemState extends State<NotificationsItem> {
               ),
             ),
           ),
-          subtitle: Text(tAgo.format(widget.timestamp.toDate()),
+          // subtitle: Text(tAgo.format(widget.timestamp.toDate()),
+          subtitle: Text("timestamp to date",
               overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12)),
           trailing: mediaPreview,
         ),

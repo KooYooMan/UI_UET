@@ -37,8 +37,7 @@ class _SignInState extends State<SignIn> {
       });
 
       //authenticate with email and password
-      dynamic result =
-          _auth.signInWithEmailAndPassword(email, password).then((val) {
+      _auth.signInWithEmailAndPassword(email, password).then((val) {
         //save userDetails to sharedPreference
         if (val == null) {
           setState(() {
@@ -100,9 +99,17 @@ class _SignInState extends State<SignIn> {
                                   SizedBox(width: 3),
                                   Expanded(
                                     child: TextFormField(
-                                        validator: (val) => val.isEmpty
-                                            ? 'Enter an email'
-                                            : null,
+                                        validator: (String value) {
+                                          if (value.isEmpty) {
+                                            return "Email must not be empty";
+                                          }
+                                          if (!RegExp(
+                                                  "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                                              .hasMatch(value)) {
+                                            return "Invalid Email";
+                                          }
+                                          return null;
+                                        },
                                         //decoration: textInputDecoration.copyWith(
                                         //hintText: 'Email Address'),
                                         onChanged: (val) {
@@ -123,9 +130,14 @@ class _SignInState extends State<SignIn> {
                                   SizedBox(width: 3),
                                   Expanded(
                                     child: TextFormField(
-                                        validator: (val) => val.length < 6
-                                            ? 'Enter a password with more than 6 characters'
-                                            : null,
+                                        validator: (String value) {
+                                          if (value.isEmpty) {
+                                            return "Password must not be empty";
+                                          }
+                                          if (value.length < 6) {
+                                            return "Password must have more than 6 characters";
+                                          }
+                                        },
                                         //decoration:
                                         //textInputDecoration.copyWith(hintText: 'Password'),
                                         obscureText: true,
@@ -170,7 +182,9 @@ class _SignInState extends State<SignIn> {
                                 color: Color(0xFFFFC107)),
                             child: Text(
                               'Sign In',
-                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
                         ),

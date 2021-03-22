@@ -225,68 +225,68 @@ class _AnonymousChatScreenState extends State<AnonymousChatScreen> {
     final user = Provider.of<User>(context);
 
     return StreamBuilder<UserData>(
-        stream: DatabaseService(uid: user.uid).userData,
+        // stream: DatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
-          UserData userData = snapshot.data;
-          if (userData != null) {
-            return Scaffold(
-              appBar: AppBar(
-                leading: IconButton(
-                    icon: Icon(LineAwesomeIcons.napster),
-                    onPressed: _showNotifications),
-                elevation: 0,
-                centerTitle: true,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "A N O N Y M O U S    C H A T",
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.w100),
-                    ),
-                  ],
+      return Loading();
+      UserData userData = snapshot.data;
+      if (userData != null) {
+        return Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+                icon: Icon(LineAwesomeIcons.napster),
+                onPressed: _showNotifications),
+            elevation: 0,
+            centerTitle: true,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "A N O N Y M O U S    C H A T",
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w100),
                 ),
-                actions: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                        FadeRoute(page: AnonymousSearch(wiggles: wiggles)),
-                        ModalRoute.withName('AnonymousSearch'),
-                      );
-                    },
-                  ),
-                ],
+              ],
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    FadeRoute(page: AnonymousSearch(wiggles: wiggles)),
+                    ModalRoute.withName('AnonymousSearch'),
+                  );
+                },
               ),
-              body: noOfTiles == 0
-                  ? Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          AutoSizeText(
-                            '* Slide into DMs by clicking the + sign and be anonymous while doing so',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w300),
-                          ),
-                          SizedBox(height: 15),
-                          AutoSizeText(
-                            '** Meet a new friend daily at 9.00pm and both of you will be anonymous',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w300),
-                          ),
-                        ],
+            ],
+          ),
+          body: noOfTiles == 0
+              ? Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      AutoSizeText(
+                        '* Slide into DMs by clicking the + sign and be anonymous while doing so',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w300),
                       ),
-                    )
-                  : chatRoomList(
-                      wiggles,
-                      //  userData.nickname
-                    ),
-            );
-          } else {
-            return Loading();
-          }
-        });
+                      SizedBox(height: 15),
+                      AutoSizeText(
+                        '** Meet a new friend daily at 9.00pm and both of you will be anonymous',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w300),
+                      ),
+                    ],
+                  ),
+                )
+              : chatRoomList(
+                  wiggles,
+                  //  userData.nickname
+                ),
+        );
+      } else {
+        return Loading();
+      }
+    });
   }
 }
 

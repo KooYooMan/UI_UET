@@ -16,11 +16,6 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final wiggles = Provider.of<List<Wiggle>>(context) ?? [];
-    
-    
-
-    
-     
 
     if (user == null) {
       return Authenticate();

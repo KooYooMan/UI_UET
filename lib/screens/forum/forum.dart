@@ -61,6 +61,7 @@ class _ForumState extends State<Forum> {
     return StreamBuilder<UserData>(
         stream: DatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
+          return Loading();
           UserData userData = snapshot.data;
           if (userData != null) {
             return Scaffold(

@@ -38,10 +38,10 @@ class _HomeState extends State<Home> {
     Myanonprofile(),
   ];
 
-  final Firestore _db = Firestore.instance;
-  final FirebaseMessaging _fcm = FirebaseMessaging();
+  // final Firestore _db = Firestore.instance;
+  // final FirebaseMessaging _fcm = FirebaseMessaging();
   showSnackBar(Map<String, dynamic> message) {
-    final snackBar = SnackBar( 
+    final snackBar = SnackBar(
       behavior: SnackBarBehavior.fixed,
       content: Text(message['notification']['body']),
       action: SnackBarAction(
@@ -60,32 +60,32 @@ class _HomeState extends State<Home> {
     _scaffoldkey.currentState.showSnackBar(snackBar);
   }
 
-  _saveDeviceToken(String uid) async {
-    String fcmToken = await _fcm.getToken();
-    DatabaseService(uid: uid).uploadtoken(fcmToken);
-  }
+  // _saveDeviceToken(String uid) async {
+  //   String fcmToken = await _fcm.getToken();
+  //   DatabaseService(uid: uid).uploadtoken(fcmToken);
+  // }
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    _fcm.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        showSnackBar(message);
-        print('onMessage: $message');
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print('onResume: $message');
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ChatScreen()));
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print('onLaunch: $message');
-      },
-    );
-    _fcm.requestNotificationPermissions(
-        const IosNotificationSettings(sound: true, badge: true, alert: true));
-  }
+  //   _fcm.configure(
+  //     onMessage: (Map<String, dynamic> message) async {
+  //       showSnackBar(message);
+  //       print('onMessage: $message');
+  //     },
+  //     onResume: (Map<String, dynamic> message) async {
+  //       print('onResume: $message');
+  //       Navigator.push(
+  //           context, MaterialPageRoute(builder: (context) => ChatScreen()));
+  //     },
+  //     onLaunch: (Map<String, dynamic> message) async {
+  //       print('onLaunch: $message');
+  //     },
+  //   );
+  //   _fcm.requestNotificationPermissions(
+  //       const IosNotificationSettings(sound: true, badge: true, alert: true));
+  // }
 
   changePage(int index) {
     setState(() {
@@ -96,7 +96,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    _saveDeviceToken(user.uid);
+    // _saveDeviceToken(user.uid);
     ScreenUtil.setScreenOrientation('portrait');
     //this StreamProvider provides the list of user for WiggleList();
     return anonymous
@@ -108,10 +108,10 @@ class _HomeState extends State<Home> {
               splashColor: Colors.transparent,
               child: Icon(Icons.portrait),
               onPressed: () {
-                DatabaseService(uid: user.uid).updateAnonymous(false);
-                setState(() {
-                  anonymous = false;
-                });
+                // DatabaseService(uid: user.uid).updateAnonymous(false);
+                // setState(() {
+                //   anonymous = false;
+                // });
               },
             ),
             floatingActionButtonLocation:
@@ -223,10 +223,10 @@ class _HomeState extends State<Home> {
                     fit: BoxFit.fill, color: Colors.amber),
               ),
               onPressed: () {
-                DatabaseService(uid: user.uid).updateAnonymous(true);
-                setState(() {
-                  anonymous = true;
-                });
+                // DatabaseService(uid: user.uid).updateAnonymous(true);
+                // setState(() {
+                //   anonymous = true;
+                // });
               },
             ),
             floatingActionButtonLocation:

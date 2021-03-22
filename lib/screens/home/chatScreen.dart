@@ -42,6 +42,7 @@ class _ChatsScreenState extends State<ChatScreen> {
     return StreamBuilder(
         stream: chatsScreenStream,
         builder: (context, snapshot) {
+          // return Loading();
           return snapshot.hasData
               ? ListView.builder(
                   itemCount: snapshot.data.documents.length,
@@ -100,34 +101,39 @@ class _ChatsScreenState extends State<ChatScreen> {
     final wiggles = Provider.of<List<Wiggle>>(context) ?? [];
 
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        title: Text("C H A T",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w100)),
-        actions: <Widget>[
-          IconButton(
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            icon: Icon(Icons.add),
-            onPressed: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                FadeRoute(page: SearchScreen(wiggles: wiggles)),
-                ModalRoute.withName('SearchScreen'),
-              );
-            },
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0,
+          title: Text("C H A T",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w100)),
+          actions: <Widget>[
+            IconButton(
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              icon: Icon(Icons.add),
+              onPressed: () {
+                // Navigator.of(context).pushAndRemoveUntil(
+                //   FadeRoute(page: SearchScreen(wiggles: wiggles)),
+                //   ModalRoute.withName('SearchScreen'),
+                // );
+              },
+            ),
+          ],
+        ),
+        // body: noOfTiles == 0
+        //     ? Center(
+        //         child: Text(
+        //           'Talk to a friend by clicking the + icon',
+        //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+        //         ),
+        //       )
+        //     : chatRoomList(wiggles),
+        body: Center(
+          child: Text(
+            'Talk to a friend by clicking the + icon',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
           ),
-        ],
-      ),
-      body: noOfTiles == 0
-          ? Center(
-              child: Text(
-                'Talk to a friend by clicking the + icon',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
-              ),
-            )
-          : chatRoomList(wiggles),
-    );
+        ));
   }
 }
 

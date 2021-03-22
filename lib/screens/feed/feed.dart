@@ -40,6 +40,15 @@ class _FeedState extends State<Feed> {
     return StreamBuilder(
       stream: postsStream,
       builder: (context, snapshot) {
+        return FeedTile(
+          wiggle: wiggles[0],
+          wiggles: wiggles,
+          description: "hello boiz",
+          timestamp: Timestamp(100, 100),
+          url: "https://picsum.photos/250?image=9",
+          postId: "world",
+          likes: 100,
+        );
         return snapshot.hasData
             ? ListView.builder(
                 controller: scrollController,
@@ -168,29 +177,29 @@ class _FeedState extends State<Feed> {
     final wiggles = Provider.of<List<Wiggle>>(context) ?? [];
     final user = Provider.of<User>(context);
     return StreamBuilder<UserData>(
-        stream: DatabaseService(uid: user.uid).userData,
+        // stream: DatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
-          UserData userData = snapshot.data;
-          return Scaffold(
-            appBar: AppBar(
-              title: Text("F E E D",
-                  textAlign: TextAlign.right,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w100)),
-              actions: <Widget>[
-                IconButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    icon: Icon(Icons.image),
-                    onPressed: () {
-                      takeImage(context, userData);
-                    }),
-              ],
-            ),
-            body: feedList(wiggles),
-          );
-          // RefreshIndicator(
-          //     child: createTimeLine(), onRefresh: () => retrieveTimeline()));
-        });
+      UserData userData = snapshot.data;
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("F E E D",
+              textAlign: TextAlign.right,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w100)),
+          actions: <Widget>[
+            IconButton(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                icon: Icon(Icons.image),
+                onPressed: () {
+                  takeImage(context, userData);
+                }),
+          ],
+        ),
+        body: feedList(wiggles),
+      );
+      // RefreshIndicator(
+      //     child: createTimeLine(), onRefresh: () => retrieveTimeline()));
+    });
   }
 }
 
@@ -260,10 +269,11 @@ class _FeedTileState extends State<FeedTile> {
               child: SizedBox(
                 width: 180,
                 height: 180,
-                child: Image.network(
-                  widget.wiggle.dp,
-                  fit: BoxFit.cover,
-                ),
+                // child: Image.network(
+                //   widget.wiggle.dp,
+                //   fit: BoxFit.cover,
+                // ),
+                child: Container(),
               ),
             ),
           ),
@@ -324,7 +334,8 @@ class _FeedTileState extends State<FeedTile> {
             },
       child: Stack(
         alignment: Alignment.center,
-        children: <Widget>[Image.network(widget.url)],
+        // children: <Widget>[Image.network(widget.url)],
+        children: <Widget>[Container()],
       ),
     );
   }
@@ -373,10 +384,11 @@ class _FeedTileState extends State<FeedTile> {
                 child: SizedBox(
                   width: 180,
                   height: 180,
-                  child: Image.network(
-                    widget.wiggle.dp,
-                    fit: BoxFit.cover,
-                  ),
+                  // child: Image.network(
+                  //   widget.wiggle.dp,
+                  //   fit: BoxFit.cover,
+                  // ),
+                  child: Container(),
                 ),
               ),
             ),
@@ -416,39 +428,39 @@ class _FeedTileState extends State<FeedTile> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    // final user = Provider.of<User>(context);
     return StreamBuilder<UserData>(
-        stream: DatabaseService(uid: user.uid).userData,
+        // stream: DatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
-          UserData userData = snapshot.data;
-          check = Constants.myEmail == widget.wiggle.email;
-          return GestureDetector(
-            onTap: () {
-              // Navigator.of(context).pushAndRemoveUntil(
-              //     FadeRoute(
-              //       page: ConversationScreen(
-              //         wiggles: wiggles,
-              //         wiggle: wiggle,
-              //         userData: userData,
-              //       ),
-              //     ),
-              //     ModalRoute.withName('ConversationScreen'));
-            },
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 12),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  createPostHead(context, userData),
-                  createPostPicture(userData),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  createPostFooter(context, userData),
-                ],
+      UserData userData = snapshot.data;
+      check = Constants.myEmail == widget.wiggle.email;
+      return GestureDetector(
+        onTap: () {
+          // Navigator.of(context).pushAndRemoveUntil(
+          //     FadeRoute(
+          //       page: ConversationScreen(
+          //         wiggles: wiggles,
+          //         wiggle: wiggle,
+          //         userData: userData,
+          //       ),
+          //     ),
+          //     ModalRoute.withName('ConversationScreen'));
+        },
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 12),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              createPostHead(context, userData),
+              createPostPicture(userData),
+              SizedBox(
+                height: 10,
               ),
-            ),
-          );
-        });
+              createPostFooter(context, userData),
+            ],
+          ),
+        ),
+      );
+    });
   }
 }

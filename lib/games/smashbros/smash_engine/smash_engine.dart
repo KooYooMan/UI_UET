@@ -9,7 +9,7 @@ class SmashEngine extends InheritedWidget {
   final Queue<String> inputs = new Queue();
 
   static SmashEngine of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(SmashEngine) as SmashEngine;
+    // return context.inheritFromWidgetOfExactType(SmashEngine) as SmashEngine;
   }
 
   SmashEngine({

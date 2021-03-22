@@ -138,7 +138,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
           return GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             child: Scaffold(
-              resizeToAvoidBottomPadding: true,
+              // resizeToAvoidBottomPadding: true,
               // backgroundColor: Color.fromRGBO(3, 9, 23, 1),
               appBar: AppBar(
                 titleSpacing: 50,

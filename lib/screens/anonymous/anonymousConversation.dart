@@ -142,7 +142,7 @@ class _AnonymousConversationState extends State<AnonymousConversation> {
           return GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             child: Scaffold(
-              resizeToAvoidBottomPadding: true,
+              // resizeToAvoidBottomPadding: true,
               appBar: AppBar(
                 leading: IconButton(
                     icon: Icon(LineAwesomeIcons.home),
